@@ -6,22 +6,20 @@ function getMarvelComics() {
     var hash = CryptoJS.MD5(time + privateKey + publicKey).toString();
     var url = 'https://gateway.marvel.com:443/v1/public/comics'
     var characterId = '1009718';
+
+    var endpoint = 'https://gateway.marvel.com:443/v1/public/comics?ts=' + time + '&apikey=' + publicKey + '&hash=' + hash;
  
     console.log(url);
- 
-    $.getJSON(url, {
-       ts: time,
-       apikey: publicKey,
-       hash: hash,
-       characters: characterId})
-       .done(function(data) {
-          drawResult(data.data.results);
-       })
-       .fail(function(err) {
-          console.log(err);
-       });
 
-       
+    var xhr = new XMLHttpRequest();
+  
+       xhr.open('GET', endpoint,true);
+       xhr.onload = function() {
+           console.log(xhr.responseText);
+       };
+
+       xhr.send();
+       drawResult(results);
  };
  
  
